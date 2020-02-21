@@ -2,6 +2,7 @@ import os
 import sys
 import kncloudevents
 import logging
+import subprocess
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
@@ -22,3 +23,5 @@ def run_event(event):
 
 client = kncloudevents.CloudeventsServer()
 client.start_receiver(run_event)
+
+#subprocess.call(['ffmpeg','-protocol_whitelist','file,http,https,tcp,tls', '-i', 'index.m3u8','-c','copy','-bsf:a','aac_adtstoasc','out.mp4'])

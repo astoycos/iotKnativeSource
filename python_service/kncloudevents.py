@@ -56,7 +56,7 @@ class CloudeventsServer(object):
                 #    data = io.StringIO(data)
 
                 event = v02.Event()
-                event = m.FromRequest(event, headers, data,str)
+                event = m.FromRequest(event, headers, data, str)
                 func(event)
                 self.send_response(204)
                 self.end_headers()
