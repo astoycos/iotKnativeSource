@@ -18,6 +18,7 @@ import http.server
 import socketserver
 import json
 import logging
+
 from cloudevents.sdk.event import v02
 from cloudevents.sdk import marshaller
 import io
