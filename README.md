@@ -5,6 +5,11 @@ This repository houses a knative service that will accept data from IOT devices 
 
 ## Components/Prequisites 
 
+## Kubernetes 
+
+### OpenShift
+  This demo assumes you have a functional Openshift Cluster 
+  
 ## Enmasse
 
 [Enmasse](enmasse.io) is a scalable cloud hosted messaging architecture which in this example is used to connect the [iotDeviceSimulator](https://github.com/astoycos/iotDeviceSimulator) to a kubernetes cluser, or in this case an OpenShift Cluster. 
