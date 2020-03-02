@@ -6,9 +6,7 @@ The overall system Architecture is described by the following diagram
 
 ![image1](https://raw.githubusercontent.com/astoycos/iotKnativeSource/master/docs/iotKnativeSource.png)
 
-![image0](https://raw.githubusercontent.com/astoycos/iotKnativeSource/master/docs/Article.jpg)
-
-## Components/Prequisites  
+## *Components/Prequisites*  
 
 ### OpenShift
   This demo assumes you have a functional Openshift Cluster 
@@ -36,10 +34,6 @@ For this Demo, Enmasse requires some specific configurations for the iot protoco
   
   2. Download and install [Knative Eventing and Sources](https://knative.dev/docs/eventing/) 
   
-The overall system Architecture is described by the following diagram 
-
-![image2](https://raw.githubusercontent.com/astoycos/iotKnativeSource/master/docs/iotKnativeSource.png)
-
 ## The Service
 
 The iotKnativeSource service implements two major blocks 
