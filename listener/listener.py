@@ -9,7 +9,8 @@ import http.server
 from socketserver import ThreadingMixIn
 import threading
 
-#Basic multithreaded Python Cloud Event Listener to write HLS Streaming video to .m3u8 file 
+# Basic multithreaded Python server which acts as a ls
+# Cloud Event Listener to write HLS Streaming video to .m3u8 file 
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
