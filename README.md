@@ -5,11 +5,10 @@ This repository houses a knative service that will accept data from IOT devices 
 The overall system Architecture is described by the following diagram 
 
 ![image1](https://raw.githubusercontent.com/astoycos/iotKnativeSource/master/docs/iotKnativeSource.png)
-
 ## *Components/Prequisites*  
 
 ### OpenShift
-  This demo assumes you have a functional Openshift Cluster 
+  This demo assumes you have a functional Openshift 4.X Cluster 
   
 ### Enmasse Setup
 
@@ -47,7 +46,7 @@ The iotKnativeSource service implements two major blocks
 
  ## How to run 
  
- 1. Clone this repo 
+ 1. Clone this repo wit `git clone https://github.com/astoycos/iotKnativeSource.git`
  
  2. Either Download and build (using the provided instructions) the [iotContainerSource repo](https://github.com/astoycos/iotContainerSource) or simply use the prebuilt image at quay.io/astoycos/iotcontainersource with the premade demo yamls in the git folder `demo-seup`
  
@@ -56,7 +55,7 @@ The iotKnativeSource service implements two major blocks
       * `export STREAMURL=<youtube livestream link> 
       * `go run ./cmd`
  
- 4. Open a new terminal that can talk to your OpenShift Cluster using the `oc` CLI
+ 4. Open a new terminal and make sure you are in the `knative-eventing` namespace with `oc project knative-eventing`
 
  5. Apply the iotKnativeService with `oc apply -f demo-setup/iotknativeservice.yaml`
  
