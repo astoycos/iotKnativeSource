@@ -45,7 +45,7 @@ spec:
   
   2. Download and install [Knative Eventing and Sources](https://knative.dev/docs/eventing/) 
   
-## The Service
+## *The Knative Service*
 
 The iotKnativeSource service implements two major blocks 
 
@@ -54,6 +54,7 @@ The iotKnativeSource service implements two major blocks
 
    2. APP
       - [Tensorflow object detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) module         that does realtime image analysis on an incoming IOT video stream 
+      - It currently uses the built in model `ssd_mobilenet_v1_fpn_coco` but other models from [Tensorflow's Detdction Model         Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) can be applied 
       - Basic Flask application that streams the analyzed video for viewing outside of the cloud hosted container 
 
  ## How to run 
