@@ -29,7 +29,7 @@ spec:
     http:
       enabled: true
       options:
-        maxPayloadSize: 16384 # 16KiB
+        maxPayloadSize: 5000000 # 5MB
 ```
 
 3. Follow the standard instructions to [setup enmasse IoT on OpenShift](https://enmasse.io/documentation/0.30.2/openshift/#'iot-guide-messaging-iot)
