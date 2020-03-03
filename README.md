@@ -22,7 +22,7 @@ For this Demo, Enmasse requires some specific configurations for the iot protoco
 
 3. Follow the standard instructions to [setup enmasse IoT on OpenShift](https://enmasse.io/documentation/0.30.2/openshift/#'iot-guide-messaging-iot)
 
-4. Apply the Version Permissions Fix `oc apply -f permfix.yam` note:This was another issue with enmasse v0.30.1 on Openshift
+4. Apply the Version Permissions Fix `oc apply -f demo-setup/permfix.yam` note:This was another issue with enmasse v0.30.1 on Openshift
 
 
 ### Knative Setup
@@ -46,13 +46,13 @@ The iotKnativeSource service implements two major blocks
 
  ## How to run 
  
- 1. Clone this repo wit `git clone https://github.com/astoycos/iotKnativeSource.git`
+ 1. Clone this repo with `git clone https://github.com/astoycos/iotKnativeSource.git`
  
  2. Either Download and build (using the provided instructions) the [iotContainerSource repo](https://github.com/astoycos/iotContainerSource) or simply use the prebuilt image at quay.io/astoycos/iotcontainersource with the premade demo yamls in the git folder `demo-seup`
  
- 3. Clone the iotDeviceSimulator repo and run the following commands 
-      * `export REGISTRY_HOST=$(oc -n enmasse-infra get routes device-registry --template='{{ .spec.host }}')`
-      * `export STREAMURL=<youtube livestream link> 
+ 3. Clone the iotDeviceSimulator repo and run the following commands to simulate an IoT camera
+      * `export ENDPOINT=$(oc -n enmasse-infra get routes iot-http-adapter --template='{{ .spec.host }}')`
+      * `export STREAMURL=<youtube livestream link>` 
       * `go run ./cmd`
  
  4. Open a new terminal and make sure you are in the `knative-eventing` namespace with `oc project knative-eventing`
