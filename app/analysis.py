@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-## If we just use Tensorflow 2.x we git "Config"
+## If we just use Tensorflow 2.x we git "Config" error
 try:
   import tensorflow.compat.v2 as tf
 except Exception:
@@ -22,7 +22,6 @@ import cv2
 import subprocess
 import time
 
-
 from collections import defaultdict
 from io import StringIO
 from matplotlib import pyplot as plt
@@ -40,12 +39,6 @@ import argparse
 import datetime
 import time
 import cv2
-
-##Config for Flask
-
-#outputFrame = None
-#cap = cv2.VideoCapture("out.mkv")
-#lock = threading.Lock()
 
 # initialize a flask object
 app = Flask(__name__,template_folder='templates')
@@ -78,7 +71,7 @@ def load_model(model_name):
 
   return model
 
-
+#Runs Tensorflow Object Detection API on a Single Frame 
 def run_inference_for_single_image(model, image):
   
   image = np.asarray(image)
@@ -116,6 +109,7 @@ def run_inference_for_single_image(model, image):
     
   return output_dict
 
+#Overlays the results from image analysis onto frame
 def show_inference(model, image_path):
     # the array based representation of the image will be used later in order to prepare the
     # result image with boxes and labels on it.
@@ -136,23 +130,24 @@ def show_inference(model, image_path):
     return(image_np)
 
 
-#Function to read in frames and do analysis 
+#Function to read in frames and do analysis as long as video sream is active 
 def generate():
   
-  ## Make sure video stream is current 
+  # Make sure video stream is current 
   print("Removing stale stream file")
   try: 
     os.remove("app/out.mkv")
   except:
     print("No Video file present")   
 
-  ##Make sure livestream is here                                                               
+  #Make sure livestream is avaliable                                                               
   print("Waiting until livesteam is received...")
   while not os.path.exists("app/index.m3u8"):
     time.sleep(1)
   print("Livestream received")
   video_digest = subprocess.Popen(['ffmpeg','-protocol_whitelist','file,http,https,tcp,tls', '-i', 'app/index.m3u8','-c','copy','-bsf:a','aac_adtstoasc','app/out.mkv'],stdout=ffmpeg_log,stderr=ffmpeg_log)
 
+  # Give 10s for ffmpeg to process livestream into OpenCV readable input
   time.sleep(10)
 
   cap = cv2.VideoCapture("app/out.mkv")
@@ -161,16 +156,13 @@ def generate():
   while(cap.isOpened()): 
     # Capture frames 
     count+=1 
-    
     ret, tempframe = cap.read()
+    #Downsample frames to go from 30 fps to 3 fps Since Tensorflow Detection is currently slow
     if count == 10:
       count = 0 
-      if ret == True:    
+      if ret == True: 
+        #Run inference on video Frame    
         out_frame = show_inference(detection_model, tempframe).copy()
-        
-        #with lock: 
-        #outputFrame = out_frame.copy()
-
         
         (flag, encodedImage) = cv2.imencode(".jpg", out_frame)
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
@@ -183,11 +175,6 @@ def servid(outputFrame):
   #global lock, outputFrame
 
   while True: 
-    #cv2.imshow('frame2',frame) 
-    #Image.fromarray(frame).save("test.png")
-    #cv2.imshow('frame2',frame)
-    #with lock:
-    #cv2.imshow('frame',outputFrame)
     if outputFrame is None: 
       print("Frame is none")
       continue
@@ -197,7 +184,7 @@ def servid(outputFrame):
     yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
 
 
-
+# Flask frame serving function 
 @app.route("/video_feed")
 def video_feed():
 	# return the response generated along with the specific media
@@ -229,12 +216,3 @@ if __name__ == '__main__':
     app.run(host=args["ip"], port=args["port"], debug=True,
       threaded=True, use_reloader=False)
 
-    #cap = cv2.VideoCapture("out.mkv")
-    
-
-    # start a thread that will perform motion detection
-    #t = threading.Thread(target=generate)
-    #t.daemon = True
-    #t.start()
-
-    #Currently Threading is disabled Can can only open on one browser
